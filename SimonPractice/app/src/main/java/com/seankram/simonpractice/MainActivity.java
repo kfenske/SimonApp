@@ -62,8 +62,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         levelText.setText("Level: " + level);
 
-        /* gameView = new GameSurfaceView(this);
-        setContentView(gameView); */
+        GamePlay gamePlay = new GamePlay();
     }
 
     @Override
