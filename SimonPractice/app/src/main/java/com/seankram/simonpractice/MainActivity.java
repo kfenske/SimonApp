@@ -1,19 +1,20 @@
 package com.seankram.simonpractice;
 
+import android.animation.ObjectAnimator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -25,21 +26,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     ImageButton b4;
 
     Button startButton;
+    Button resumeButton;
 
     int level = 1;
-    int consecRight = 0;
-    int consecWrong = 0;
     int numClick = 0;
-    boolean didClick = false;
-    boolean isRunning = false;
     boolean inputReady = false;
     ArrayList<Integer> input;
     ArrayList<Integer> pattern;
 
-    Thread thread;
-    Handler h;
+    Random r;
 
-    // protected GameSurfaceView gameView;
+    Animation flashButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +51,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         b3 = (ImageButton) findViewById(R.id.b3);
         b4 = (ImageButton) findViewById(R.id.b4);
         startButton = (Button) findViewById(R.id.startButton);
+        resumeButton = (Button) findViewById(R.id.resumeButton);
 
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
         startButton.setOnClickListener(this);
+        resumeButton.setOnClickListener(this);
+
+        flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
 
         levelText.setText("Level: " + level);
 
-        GamePlay gamePlay = new GamePlay();
+        pattern = new ArrayList<>();
+        r = new Random();
     }
 
     @Override
@@ -71,161 +74,126 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.b1:
                 if (inputReady) {
                     input.add(1);
-                    didClick = true;
+                    checkAnswer();
                 }
                 break;
             case R.id.b2:
                 if (inputReady) {
                     input.add(2);
-                    didClick = true;
+                    checkAnswer();
                 }
                 break;
             case R.id.b3:
                 if (inputReady) {
                     input.add(3);
-                    didClick = true;
+                    checkAnswer();
                 }
                 break;
             case R.id.b4:
                 if (inputReady) {
                     input.add(4);
-                    didClick = true;
+                    checkAnswer();
                 }
                 break;
             case R.id.startButton:
-                levelText.setText("Level clicked!");
-                Log.i("Pattern", "Start clicked.");
-                /*if (!isRunning) {
-                    isRunning = true;
-                    consecRight = 0;
-                    consecWrong = 0;
-                    playGame();
-                } */
-
-                pattern = new ArrayList<Integer>();
-                Random r = new Random();
-
-                for (int i = 0; i < level + 2; i++) {
-                    pattern.add(r.nextInt(4) + 1);
-                    Log.i("Pattern", pattern.get(i).toString());
-                }
-
-                flashButtons();
-
+                level = 1;
+                levelText.setText("Level: " + level);
+                pattern.clear();
+                playGame();
+                break;
+            case R.id.resumeButton:
+                playGame();
+                resumeButton.setVisibility(View.INVISIBLE);
                 break;
         }
     }
 
     protected void playGame() {
-        while (isRunning) {
-            pattern = new ArrayList<Integer>();
-            Random r = new Random();
-
-            for (int i = 0; i < level + 2; i++) {
-                pattern.add(r.nextInt(4) + 1);
-            }
-
-            flashButtons();
-
-            input = new ArrayList<Integer>();
-            numClick = 0;
-            inputReady = true;
-
-            long t = System.currentTimeMillis();
-            long end = t + 10000;
-
-            while (System.currentTimeMillis() < end) {
-                if (didClick) {
-                    if (pattern.get(numClick) != input.get(numClick)) {
-                        gotItWrong();
-                        break;
-                    } else if (pattern.size() == input.size()) {
-                        gotItRight();
-                        break;
-                    } else {
-                        numClick++;
-                    }
-                    didClick = false;
-                }
-            }
-
-            if (input.size() < pattern.size()) {
-                gotItWrong();
-            }
-
+        if (level > pattern.size()) {
+            pattern.add(r.nextInt(4) + 1);
+        } else if (pattern.size() > 1) {
+            pattern.remove(pattern.get(level));
         }
-        isRunning = false;
+
+        flashButtons();
+
+        input = new ArrayList<>();
+        numClick = 0;
+        inputReady = true;
+    }
+
+    protected void checkAnswer() {
+        if (pattern.get(numClick) != input.get(numClick)) {
+            gotItWrong();
+        } else if (pattern.size() == input.size()) {
+            gotItRight();
+        } else {
+            numClick++;
+        }
     }
 
     protected void gotItRight() {
-        consecRight++;
-        consecWrong = 0;
-        if (consecRight == 5) {
-            level++;
-            levelText.setText("Level: " + level);
-            consecRight = 0;
-        }
+        level++;
+        levelText.setText("Level: " + level);
+        playGame();
     }
 
     protected void gotItWrong() {
-        consecWrong++;
-        consecRight = 0;
-        if (consecWrong == 3 && level > 1) {
+        inputReady = false;
+        resumeButton.setVisibility(View.VISIBLE);
+        if (level > 1) {
             level--;
             levelText.setText("Level: " + level);
-            consecWrong = 0;
         }
     }
 
     protected void flashButtons() {
+        int[] btnsToFlash = new int[pattern.size()];
         for (int i = 0; i < pattern.size(); i++) {
 
             switch (pattern.get(i)) {
                 case 1:
-                    b1.setPressed(true);
-                    // while (System.currentTimeMillis() < end) {}
-                    b1.setPressed(false);
+                    btnsToFlash[i] = R.id.b1;
                     break;
                 case 2:
-                    b2.setPressed(true);
-                    // while (System.currentTimeMillis() < end) {}
-                    b2.setPressed(false);
+                    btnsToFlash[i] = R.id.b2;
                     break;
                 case 3:
-                    b3.setPressed(true);
-                    // while (System.currentTimeMillis() < end) {}
-                    b3.setPressed(false);
+                    btnsToFlash[i] = R.id.b3;
                     break;
                 case 4:
-                    b4.setPressed(true);
-                    // while (System.currentTimeMillis() < end) {}
-                    b4.setPressed(false);
+                    btnsToFlash[i] = R.id.b4;
                     break;
             }
         }
+
+        ArrayList<ObjectAnimator> anims = new ArrayList<>();
+
+        int i = 0;
+        for (int viewId : btnsToFlash) {
+            ImageButton imgBtn = (ImageButton) findViewById(viewId);
+            ObjectAnimator flashBtn = ObjectAnimator.ofFloat(imgBtn, "alpha", 1.0f, 0.0f);
+            flashBtn.setRepeatCount(1);
+            flashBtn.setRepeatMode(ObjectAnimator.REVERSE);
+            flashBtn.setDuration(300);
+            flashBtn.setStartDelay((i * 500) + 250);
+            anims.add(flashBtn);
+            i++;
+        }
+
+        for (ObjectAnimator anim : anims) {
+            anim.start();
+        }
     }
-
-        /*h = new Handler();
-        Runnable runnable = new Runnable(){
-
-            public void run() {
-
-        };
-
-        thread = new Thread(runnable);
-        thread.start();*/
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        // gameView.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // gameView.pause();
     }
 
     @Override
@@ -250,33 +218,3 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 }
-
-/* class StopperThread extends Thread {
-    private long time = 0;
-
-    public boolean isStop = false;
-
-    public StopperThread(long time) {
-        this.time = time;
-    }
-
-    @Override
-    public void run() {
-        long start = 0;
-
-        while(true) {
-            start = System.currentTimeMillis();
-            try {
-                Thread.sleep(this.time);
-            } catch (InterruptedException e) {
-                this.time -= (System.currentTimeMillis() - start);
-                if (this.time > 0) {
-                    continue;
-                }
-            }
-            isStop = true;
-            break;
-        }
-    }
-}
-*/

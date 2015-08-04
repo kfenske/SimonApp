@@ -8,6 +8,18 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/b1hid"
+        android:background="@drawable/b1lit"
+        android:layout_above="@+id/b3"
+        android:layout_alignRight="@+id/startButton"
+        android:layout_alignEnd="@+id/startButton"
+        android:layout_marginRight="56dp"
+        android:layout_marginEnd="56dp"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/b1"
         android:background="@drawable/b1x"
         android:layout_above="@+id/b3"
@@ -15,6 +27,16 @@
         android:layout_alignEnd="@+id/startButton"
         android:layout_marginRight="56dp"
         android:layout_marginEnd="56dp"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/b2hid"
+        android:background="@drawable/b2lit"
+        android:layout_above="@+id/b4"
+        android:layout_toRightOf="@+id/b3"
+        android:layout_toEndOf="@+id/b3"
         android:clickable="true" />
 
     <ImageButton
@@ -30,11 +52,31 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/b3hid"
+        android:background="@drawable/b3lit"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/b1"
+        android:layout_alignStart="@+id/b1"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/b3"
         android:background="@drawable/b3x"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/b1"
         android:layout_alignStart="@+id/b1"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/b4hid"
+        android:background="@drawable/b4lit"
+        android:layout_below="@+id/b1"
+        android:layout_toRightOf="@+id/b3"
+        android:layout_toEndOf="@+id/b3"
         android:clickable="true" />
 
     <ImageButton
@@ -54,6 +96,15 @@
         android:id="@+id/startButton"
         android:layout_marginTop="71dp"
         android:layout_below="@+id/b3"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resume_button"
+        android:id="@+id/resumeButton"
+        android:visibility="invisible"
+        android:layout_below="@+id/startButton"
         android:layout_centerHorizontal="true" />
 
     <TextView
