@@ -30,15 +30,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button startButton;
     Button resumeButton;
 
+    boolean inputReady = false;
+    boolean isWin = false;
+
+    /*
     int level = 1;
     int numClick = 0;
-    boolean inputReady = false;
     ArrayList<Integer> input;
     ArrayList<Integer> pattern;
 
     Random r;
+    */
 
     Animation flashButton;
+
+    public GamePlay game;
 
 
     @Override
@@ -64,15 +70,55 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
 
-        levelText.setText("Level: " + level);
+        /*levelText.setText("Level: " + level);
 
         pattern = new ArrayList<>();
-        r = new Random();
+        r = new Random();*/
+
+        game = new GamePlay();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        if(v.getId() == R.id.startButton) {
+            game.newGame();
+            flashButtons();
+            inputReady = true;
+        }
+        else {
+            switch (v.getId()) {
+                case R.id.b1:
+                    if(inputReady){
+                        isWin = game.checkGameWin(1);
+                    }
+                    break;
+                case R.id.b2:
+                    if(inputReady){
+                        isWin = game.checkGameWin(2);
+                    }
+                    break;
+                case R.id.b3:
+                    if(inputReady){
+                        isWin = game.checkGameWin(3);
+                    }
+                    break;
+                case R.id.b4:
+                    if(inputReady){
+                        isWin = game.checkGameWin(4);
+                    }
+                    break;
+            }
+            if(!isWin) {
+                inputReady = false;
+            }
+            else {
+                game.newGame();
+                flashButtons();
+                inputReady = true;
+            }
+        }
+
+        /*switch (v.getId()) {
             case R.id.b1:
                 if (inputReady) {
                     input.add(1);
@@ -107,9 +153,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 playGame();
                 resumeButton.setVisibility(View.INVISIBLE);
                 break;
-        }
+
+        }*/
     }
 
+    /*
     protected void playGame() {
         if (level > pattern.size()) {
             pattern.add(r.nextInt(4) + 1);
@@ -148,12 +196,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             levelText.setText("Level: " + level);
         }
     }
+    */
 
     protected void flashButtons() {
-        int[] btnsToFlash = new int[pattern.size()];
-        for (int i = 0; i < pattern.size(); i++) {
+        int[] btnsToFlash = new int[game.gameArray.size()];
+        for (int i = 0; i < game.gameArray.size(); i++) {
 
-            switch (pattern.get(i)) {
+            switch (game.gameArray.get(i)) {
                 case 1:
                     btnsToFlash[i] = R.id.b1;
                     break;

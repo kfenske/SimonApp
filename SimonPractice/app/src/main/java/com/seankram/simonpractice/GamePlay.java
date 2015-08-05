@@ -24,7 +24,7 @@ public class GamePlay {
         gameArray = new ArrayList<Integer>();
     }
 
-    private ArrayList<Integer> newGame() {
+    public void newGame() {
         //This returns the array of numbers to
         //animate the buttons that the user needs to repeat.
         //It should be called when the player says "new game"
@@ -35,10 +35,9 @@ public class GamePlay {
 
         gameArray.add(buttonSelect);
 
-        return gameArray;
     }
 
-    private boolean checkGameWin(int buttonID) {
+    public boolean checkGameWin(int buttonID) {
         //This method should be called each time a button is clicked by the user.
         //The value passed in is the ID number of the button (int value of 1-4)
         while((checkButtonClick + 1) != gameArray.size())
@@ -64,7 +63,7 @@ public class GamePlay {
         return true;
     }
 
-    private boolean checkGameSequence(int buttonID) {
+    public boolean checkGameSequence(int buttonID) {
         //This method checks that the button clicked is equal to the
         //corresponding value in the randomly generated array
         if (gameArray.get(checkButtonClick) == buttonID)
