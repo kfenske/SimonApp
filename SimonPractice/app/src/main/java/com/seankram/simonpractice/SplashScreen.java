@@ -43,7 +43,7 @@ public class SplashScreen extends Activity implements View.OnClickListener {
     }
 
     public void viewHS() {
-        //Intent intent = new Intent(this, HighScores.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, TopScoresActivity.class);
+        startActivity(intent);
     }
 }
