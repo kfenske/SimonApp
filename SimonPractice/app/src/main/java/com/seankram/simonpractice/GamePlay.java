@@ -43,6 +43,7 @@ public class GamePlay {
 
         inputArray = new ArrayList<>();
         checkButtonClick = 0;
+        playerLost = false;
     }
 
     public void checkAnswer() {
@@ -53,7 +54,6 @@ public class GamePlay {
         } else {
             checkButtonClick++;
             playerWon = false;
-            playerLost = false;
         }
     }
 
@@ -64,7 +64,8 @@ public class GamePlay {
     }
 
     public void gotItWrong() {
-        scoreBoard.add(gameCounter);
+        // MESSAGE FOR Darryl Kukor: Push gameCounter into your TopScoresActivity!
+        // scoreBoard.add(gameCounter);
         gameCounter = 1;
         gameArray.clear();
         playerLost = true;

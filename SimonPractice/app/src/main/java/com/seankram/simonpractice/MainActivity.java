@@ -79,16 +79,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.startButton) {
-            updateLevel();
-
             game.newGame();
-            flashButtons();
-            inputReady = true;
-        } else if (v.getId() == R.id.resumeButton) {
             updateLevel();
-            resumeButton.setVisibility(View.INVISIBLE);
-
-            game.newGame();
             flashButtons();
             inputReady = true;
         } else {
@@ -120,8 +112,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
 
             if(game.playerLost) {
+                updateLevel();
                 inputReady = false;
-                resumeButton.setVisibility(View.VISIBLE);
+                Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
             } else if (game.playerWon){
                 flashButtons();
                 inputReady = true;
