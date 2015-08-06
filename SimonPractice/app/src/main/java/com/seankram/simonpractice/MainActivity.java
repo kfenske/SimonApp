@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -31,7 +29,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button resumeButton;
 
     boolean inputReady = false;
-    boolean isWin = false;
 
     /*
     int level = 1;
@@ -76,43 +73,56 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         r = new Random();*/
 
         game = new GamePlay();
+        updateLevel();
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.startButton) {
+            updateLevel();
+
             game.newGame();
             flashButtons();
             inputReady = true;
-        }
-        else {
+        } else if (v.getId() == R.id.resumeButton) {
+            updateLevel();
+            resumeButton.setVisibility(View.INVISIBLE);
+
+            game.newGame();
+            flashButtons();
+            inputReady = true;
+        } else {
             switch (v.getId()) {
                 case R.id.b1:
                     if(inputReady){
-                        isWin = game.checkGameWin(1);
+                        game.inputArray.add(1);
+                        game.checkAnswer();
                     }
                     break;
                 case R.id.b2:
                     if(inputReady){
-                        isWin = game.checkGameWin(2);
+                        game.inputArray.add(2);
+                        game.checkAnswer();
                     }
                     break;
                 case R.id.b3:
                     if(inputReady){
-                        isWin = game.checkGameWin(3);
+                        game.inputArray.add(3);
+                        game.checkAnswer();
                     }
                     break;
                 case R.id.b4:
                     if(inputReady){
-                        isWin = game.checkGameWin(4);
+                        game.inputArray.add(4);
+                        game.checkAnswer();
                     }
                     break;
             }
-            if(!isWin) {
+
+            if(game.playerLost) {
                 inputReady = false;
-            }
-            else {
-                game.newGame();
+                resumeButton.setVisibility(View.VISIBLE);
+            } else if (game.playerWon){
                 flashButtons();
                 inputReady = true;
             }
@@ -199,6 +209,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     */
 
     protected void flashButtons() {
+        updateLevel();
+
         int[] btnsToFlash = new int[game.gameArray.size()];
         for (int i = 0; i < game.gameArray.size(); i++) {
 
@@ -235,6 +247,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         for (ObjectAnimator anim : anims) {
             anim.start();
         }
+    }
+
+    // Updates the display to show what level the user is on,
+    // that is, how large their current pattern is.
+    protected void updateLevel() {
+        levelText.setText("Level: " + game.gameCounter);
     }
 
     @Override

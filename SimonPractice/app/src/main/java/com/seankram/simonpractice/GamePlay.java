@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 /**
  * Created by Kayla_2 on 7/29/2015.
+ * Updated by Sean on 8/5/2015.
  */
 public class GamePlay {
     //Counters
@@ -16,12 +17,17 @@ public class GamePlay {
 
     //Array size of game play sequence, based on level the player has reached
     public ArrayList<Integer> gameArray;
+    public ArrayList<Integer> inputArray;
     public ArrayList<Integer> scoreBoard;
+
+    public boolean playerWon;
+    public boolean playerLost;
 
     public GamePlay() {
         gameCounter = 1;
         checkButtonClick = 0;
-        gameArray = new ArrayList<Integer>();
+        gameArray = new ArrayList<>();
+        scoreBoard = new ArrayList<>();
     }
 
     public void newGame() {
@@ -31,13 +37,40 @@ public class GamePlay {
 
         Random rand = new Random();
 
-        buttonSelect = rand.nextInt(BUTTONS);
+        buttonSelect = rand.nextInt(BUTTONS) + 1;
 
         gameArray.add(buttonSelect);
 
+        inputArray = new ArrayList<>();
+        checkButtonClick = 0;
     }
 
-    public boolean checkGameWin(int buttonID) {
+    public void checkAnswer() {
+        if (gameArray.get(checkButtonClick) != inputArray.get(checkButtonClick)) {
+            gotItWrong();
+        } else if (gameArray.size() == inputArray.size()) {
+            gotItRight();
+        } else {
+            checkButtonClick++;
+            playerWon = false;
+            playerLost = false;
+        }
+    }
+
+    public void gotItRight() {
+        gameCounter++;
+        playerWon = true;
+        newGame();
+    }
+
+    public void gotItWrong() {
+        scoreBoard.add(gameCounter);
+        gameCounter = 1;
+        gameArray.clear();
+        playerLost = true;
+    }
+
+    /*public boolean checkGameWin(int buttonID) {
         //This method should be called each time a button is clicked by the user.
         //The value passed in is the ID number of the button (int value of 1-4)
         while((checkButtonClick + 1) != gameArray.size())
@@ -76,5 +109,5 @@ public class GamePlay {
             checkButtonClick = 0;
             return false;
         }
-    }
+    }*/
 }
