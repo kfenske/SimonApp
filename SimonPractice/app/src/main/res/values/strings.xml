@@ -9,6 +9,9 @@
     <string name="start_button">Start Game</string>
     <string name="resume_button">Resume</string>
     <string name="title_activity_top_scores">TopScoresActivity</string>
+    <string name="high_score_label">You got a high score!</string>
+    <string name="enter_score_name">Enter your name:</string>
+    <string name="enter_score_button">Enter</string>
 </resources>
 
 
