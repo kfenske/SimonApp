@@ -37,17 +37,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     Button startButton;
     Button resumeButton;
-    EditText nameEntry;
 
     boolean inputReady = false;
 
     Animation flashButton;
+    public TextView nameText;
     public String nameString;
 
     public GamePlay game;
     public TopScores topTen;
 
-
+    String newName;
+    String newScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +72,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         resumeButton.setOnClickListener(this);
 
         flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
+        nameText = (TextView)findViewById(R.id.nameText);
 
-        TopScores topTen = new TopScores();
-        String[][] winners = topTen.updatedWinners();
-
+        topTen = new TopScores();
+        //String[][] winners = topTen.updatedWinners();
 
         game = new GamePlay();
         updateLevel();
@@ -120,21 +121,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 inputReady = false;
                 Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
 
-                //if(scores.checkScore(game.storeScore)){
+                if(topTen.checkScore(game.storeScore)){
+                    enterHighScore();
+                    newName = nameText.getText().toString();
+                    newScore = String.valueOf(game.storeScore);
+                    String[] newEntry = {newName, newScore};
+                    topTen.setScore(newEntry);
+                }
 
-                //String newName = enterHighScore();
-                //String newScore = String.valueOf(game.storeScore);
-                //String[] newEntry = {newName, newScore};
-                //scores.setScore(newEntry);
-                //Toast.makeText(this, newName + ", " + newScore, Toast.LENGTH_SHORT).show();
-                //}
             } else if (game.playerWon) {
-
                 flashButtons();
                 inputReady = true;
             }
         }
-
     }
 
     protected void flashButtons() {
@@ -182,32 +181,27 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        View popupView = layout.inflate(R.layout.highscore_popup, null);
+        final View popupView = layout.inflate(R.layout.highscore_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.update();
 
         Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
 
-
-        btnEnter.setOnClickListener(new Button.OnClickListener(){
+        btnEnter.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //nameEntry = (EditText)findViewById(R.id.enter_name_edit_text);
-                //if (nameEntry.getText() != null) {
-
-                //nameString = nameEntry.getText().toString();
-
-                //}
+                final EditText nameEntry = (EditText) popupView.findViewById(R.id.enter_name_edit_text);
+                if (nameEntry.getText() != null) {
+                    nameString = nameEntry.getText().toString();
+                    nameText.setText(nameString);
+                }
                 popupWindow.dismiss();
             }
         });
-
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-        //return nameString;
     }
-
 
     // Updates the display to show what level the user is on,
     // that is, how large their current pattern is.

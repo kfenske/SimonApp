@@ -69,7 +69,7 @@ public class GamePlay {
     public void gotItWrong() {
 
         //set score to the last level number completed
-        int lastScore = gameCounter-1;
+        /*int lastScore = gameCounter-1;
 
         //check to see if score is a top ten score
         boolean topTenScore = new TopScores().checkScore(lastScore);
@@ -79,10 +79,9 @@ public class GamePlay {
             Log.d("player's score", "is top ten");
         }else{
             Log.d("player's score", "is not top ten");
-        }
+        }*/
 
-
-
+        storeScore = gameCounter;
         gameCounter = 1;
         gameArray.clear();
         playerLost = true;

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.ViewDebug;
 import android.widget.TextView;
 import android.util.Log;
+import android.widget.Toast;
 
 public class TopScoresActivity extends Activity {
     //declare variables for the widgets
     private TextView scoreBoard[][] = new TextView[10][3];
+    String[][] winners;
 
     TextView player_name_score1;
     TextView player_name_score2;
@@ -79,8 +81,7 @@ public class TopScoresActivity extends Activity {
         scoreBoard[9][2] = (TextView) findViewById(R.id.score10);
 
         //create topTen array object
-        TopScores topTen = new TopScores();
-        String[][] winners = topTen.updatedWinners();
+        winners = TopScores.winners;
 
         //load values to the widgets
         for (int x = 0; x < scoreBoard.length; x++){
