@@ -1,5 +1,7 @@
 package com.seankram.simonpractice;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 /**
@@ -64,8 +66,20 @@ public class GamePlay {
     }
 
     public void gotItWrong() {
-        // MESSAGE FOR Darryl Kukor: Push gameCounter into your TopScoresActivity!
-        // scoreBoard.add(gameCounter);
+        //set score to the last level number completed
+        int lastScore = gameCounter-1;
+
+        //check to see if score is a top ten score
+        boolean topTenScore = new TopScores().checkScore(lastScore);
+
+        if (topTenScore){
+            //if is a top ten score, then player to be prompted for name via fragment to be created
+            Log.d("player's score", "is top ten");
+        }else{
+            Log.d("player's score", "is not top ten");
+        }
+
+
         gameCounter = 1;
         gameArray.clear();
         playerLost = true;

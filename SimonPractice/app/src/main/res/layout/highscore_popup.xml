@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="1dp"
+        android:background="@android:color/darker_gray">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/background_light">
+            <TextView
+                android:id="@+id/high_score_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/high_score_label" />
+            <TextView
+                android:id="@+id/enter_name_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_score_name" />
+            <EditText
+                android:id="@+id/enter_name_edit_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/enter_name_label"/>
+            <Button
+                android:id="@+id/enter_score"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_score_button" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,6 +3,9 @@ package com.seankram.simonpractice;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup.LayoutParams;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -27,21 +32,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     Button startButton;
     Button resumeButton;
+    EditText nameEntry;
 
     boolean inputReady = false;
 
-    /*
-    int level = 1;
-    int numClick = 0;
-    ArrayList<Integer> input;
-    ArrayList<Integer> pattern;
-
-    Random r;
-    */
-
     Animation flashButton;
+    public String nameString;
 
     public GamePlay game;
+    public TopScores topTen;
 
 
     @Override
@@ -67,10 +66,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
 
-        /*levelText.setText("Level: " + level);
-
-        pattern = new ArrayList<>();
-        r = new Random();*/
+        TopScores topTen = new TopScores();
+        String[][] winners = topTen.updatedWinners();
 
         game = new GamePlay();
         updateLevel();
@@ -78,7 +75,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.startButton) {
+        if (v.getId() == R.id.startButton) {
             game.newGame();
             updateLevel();
             flashButtons();
@@ -86,120 +83,50 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         } else {
             switch (v.getId()) {
                 case R.id.b1:
-                    if(inputReady){
+                    if (inputReady) {
                         game.inputArray.add(1);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b2:
-                    if(inputReady){
+                    if (inputReady) {
                         game.inputArray.add(2);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b3:
-                    if(inputReady){
+                    if (inputReady) {
                         game.inputArray.add(3);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b4:
-                    if(inputReady){
+                    if (inputReady) {
                         game.inputArray.add(4);
                         game.checkAnswer();
                     }
                     break;
             }
 
-            if(game.playerLost) {
+            if (game.playerLost) {
                 updateLevel();
                 inputReady = false;
                 Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
-            } else if (game.playerWon){
+                //if(scores.checkScore(game.storeScore)){
+
+                //String newName = enterHighScore();
+                //String newScore = String.valueOf(game.storeScore);
+                //String[] newEntry = {newName, newScore};
+                //scores.setScore(newEntry);
+                //Toast.makeText(this, newName + ", " + newScore, Toast.LENGTH_SHORT).show();
+                //}
+            } else if (game.playerWon) {
                 flashButtons();
                 inputReady = true;
             }
         }
 
-        /*switch (v.getId()) {
-            case R.id.b1:
-                if (inputReady) {
-                    input.add(1);
-                    checkAnswer();
-                }
-                break;
-            case R.id.b2:
-                if (inputReady) {
-                    input.add(2);
-                    checkAnswer();
-                }
-                break;
-            case R.id.b3:
-                if (inputReady) {
-                    input.add(3);
-                    checkAnswer();
-                }
-                break;
-            case R.id.b4:
-                if (inputReady) {
-                    input.add(4);
-                    checkAnswer();
-                }
-                break;
-            case R.id.startButton:
-                level = 1;
-                levelText.setText("Level: " + level);
-                pattern.clear();
-                playGame();
-                break;
-            case R.id.resumeButton:
-                playGame();
-                resumeButton.setVisibility(View.INVISIBLE);
-                break;
-
-        }*/
     }
-
-    /*
-    protected void playGame() {
-        if (level > pattern.size()) {
-            pattern.add(r.nextInt(4) + 1);
-        } else if (pattern.size() > 1) {
-            pattern.remove(pattern.get(level));
-        }
-
-        flashButtons();
-
-        input = new ArrayList<>();
-        numClick = 0;
-        inputReady = true;
-    }
-
-    protected void checkAnswer() {
-        if (pattern.get(numClick) != input.get(numClick)) {
-            gotItWrong();
-        } else if (pattern.size() == input.size()) {
-            gotItRight();
-        } else {
-            numClick++;
-        }
-    }
-
-    protected void gotItRight() {
-        level++;
-        levelText.setText("Level: " + level);
-        playGame();
-    }
-
-    protected void gotItWrong() {
-        inputReady = false;
-        resumeButton.setVisibility(View.VISIBLE);
-        if (level > 1) {
-            level--;
-            levelText.setText("Level: " + level);
-        }
-    }
-    */
 
     protected void flashButtons() {
         updateLevel();
@@ -241,6 +168,31 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             anim.start();
         }
     }
+
+    protected void enterHighScore() {
+        LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layout.inflate(R.layout.highscore_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+
+        Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
+
+        btnEnter.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //nameEntry = (EditText)findViewById(R.id.enter_name_edit_text);
+                //if (nameEntry.getText() != null) {
+                //nameString = nameEntry.getText().toString();
+                //}
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+        //return nameString;
+    }
+
 
     // Updates the display to show what level the user is on,
     // that is, how large their current pattern is.
