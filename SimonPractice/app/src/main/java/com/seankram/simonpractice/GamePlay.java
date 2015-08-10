@@ -11,6 +11,7 @@ public class GamePlay {
     public int gameCounter;
     public int checkButtonClick;
     public int buttonSelect;
+    public int storeScore;
 
     //Number of buttons on the game board
     public final static int BUTTONS = 4;
@@ -66,6 +67,7 @@ public class GamePlay {
     public void gotItWrong() {
         // MESSAGE FOR Darryl Kukor: Push gameCounter into your TopScoresActivity!
         // scoreBoard.add(gameCounter);
+        storeScore = gameCounter;
         gameCounter = 1;
         gameArray.clear();
         playerLost = true;

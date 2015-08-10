@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     Button startButton;
     Button resumeButton;
+    EditText nameEntry;
 
     boolean inputReady = false;
 
@@ -38,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public GamePlay game;
     public Scores scores;
-
+    public String nameString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 inputReady = false;
                 Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
                 enterHighScore();
+                //if(scores.checkScore(game.storeScore)){
+
+                    //String newName = enterHighScore();
+                    //String newScore = String.valueOf(game.storeScore);
+                    //String[] newEntry = {newName, newScore};
+                    //scores.setScore(newEntry);
+                    //Toast.makeText(this, newName + ", " + newScore, Toast.LENGTH_SHORT).show();
+                //}
+
             } else if (game.playerWon){
                 flashButtons();
                 inputReady = true;
@@ -156,23 +167,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    protected void checkHighScore() {
-
-    }
-
     protected void enterHighScore() {
         LayoutInflater layout = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layout.inflate(R.layout.highscore_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+
         Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
-        btnEnter.setOnClickListener(new Button.OnClickListener(){
+
+        btnEnter.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //nameEntry = (EditText)findViewById(R.id.enter_name_edit_text);
+                //if (nameEntry.getText() != null) {
+                    //nameString = nameEntry.getText().toString();
+                //}
                 popupWindow.dismiss();
             }
         });
 
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+        //return nameString;
     }
 
     // Updates the display to show what level the user is on,
