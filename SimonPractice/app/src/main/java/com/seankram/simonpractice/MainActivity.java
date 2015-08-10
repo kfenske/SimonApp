@@ -7,13 +7,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -43,6 +48,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public TopScores topTen;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         TopScores topTen = new TopScores();
         String[][] winners = topTen.updatedWinners();
+
 
         game = new GamePlay();
         updateLevel();
@@ -112,6 +119,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 updateLevel();
                 inputReady = false;
                 Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
+
                 //if(scores.checkScore(game.storeScore)){
 
                 //String newName = enterHighScore();
@@ -121,6 +129,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 //Toast.makeText(this, newName + ", " + newScore, Toast.LENGTH_SHORT).show();
                 //}
             } else if (game.playerWon) {
+
                 flashButtons();
                 inputReady = true;
             }
@@ -170,7 +179,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     protected void enterHighScore() {
+
         LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
         View popupView = layout.inflate(R.layout.highscore_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
@@ -178,12 +189,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
 
+
         btnEnter.setOnClickListener(new Button.OnClickListener(){
+
             @Override
             public void onClick(View v) {
                 //nameEntry = (EditText)findViewById(R.id.enter_name_edit_text);
                 //if (nameEntry.getText() != null) {
+
                 //nameString = nameEntry.getText().toString();
+
                 //}
                 popupWindow.dismiss();
             }

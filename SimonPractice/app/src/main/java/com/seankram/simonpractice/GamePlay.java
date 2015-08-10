@@ -13,6 +13,7 @@ public class GamePlay {
     public int gameCounter;
     public int checkButtonClick;
     public int buttonSelect;
+    public int storeScore;
 
     //Number of buttons on the game board
     public final static int BUTTONS = 4;
@@ -66,6 +67,7 @@ public class GamePlay {
     }
 
     public void gotItWrong() {
+
         //set score to the last level number completed
         int lastScore = gameCounter-1;
 
@@ -78,6 +80,7 @@ public class GamePlay {
         }else{
             Log.d("player's score", "is not top ten");
         }
+
 
 
         gameCounter = 1;
