@@ -1,6 +1,9 @@
 package com.seankram.simonpractice;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
@@ -43,7 +46,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     Animation flashButton;
     public TextView nameText;
-    public String nameString;
 
     public GamePlay game;
     public TopScores topTen;
@@ -124,10 +126,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 if(topTen.checkScore(game.storeScore)){
                     enterHighScore();
-                    newName = nameText.getText().toString();
-                    newScore = String.valueOf(game.storeScore);
-                    String[] newEntry = {newName, newScore};
-                    topTen.setScore(newEntry);
                 }
 
             } else if (game.playerWon) {
@@ -178,6 +176,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
+    protected void setScore(String name) {
+        newName = name;
+        newScore = String.valueOf(game.storeScore);
+        String[] newEntry = {newName, newScore};
+        topTen.setScore(newEntry);
+    }
+
     protected void enterHighScore() {
 
         LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -192,8 +197,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public void onClick(View v) {
                 final EditText nameEntry = (EditText) popupView.findViewById(R.id.enter_name_edit_text);
                 if (nameEntry.getText() != null) {
-                    nameString = nameEntry.getText().toString();
-                    nameText.setText(nameString);
+                    String str = nameEntry.getEditableText().toString();
+                    setScore(str);
                 }
                 popupWindow.dismiss();
             }
@@ -201,18 +206,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
 
-        btnEnter.setOnClickListener(btnEnterListener); /*{
+        btnEnter.setOnClickListener(btnEnterListener);
 
-            @Override
-            public void onClick(View v) {
-                final EditText nameEntry = (EditText) popupView.findViewById(R.id.enter_name_edit_text);
-                if (nameEntry.getText() != null) {
-                    nameString = nameEntry.getText().toString();
-                    nameText.setText(nameString);
-                }
-                popupWindow.dismiss();
-            }
-        });*/
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
     }
 
