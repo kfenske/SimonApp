@@ -26,25 +26,21 @@ public class TopScores {
     }
 
     public void setScore(String[] entry){
-        int pos = 9;
+        int x = 9;
+        //if the player's score is top ten return true and sort it into the array
+        if (Integer.parseInt(entry[1]) > Integer.parseInt(winners[x][1])){    //this will be modified to include the user's name supplied on a fragment
 
-        while (pos > 0 && Integer.parseInt(entry[1]) > Integer.parseInt(winners[pos][1])){
-            pos--;
-        }
-
-        if(pos == 0){
-            if(Integer.parseInt(entry[1]) < Integer.parseInt(winners[0][1])){
-                pos = 1;
+            //move the rows down one until the correct row is found for the player's score
+            while (x > 0 && (Integer.parseInt(entry[1]) > Integer.parseInt(winners[x-1][1]))) {
+                winners[x][0] = winners[x-1][0];
+                winners[x][1] = winners[x-1][1];
+                x--;
             }
-        }
 
-        for (int i = 9; i > pos; i--){
-            winners[i][0] = winners[i-1][0];
-            winners[i][1] = winners[i-1][1];
+            //enter the player's name and score
+            winners[x][0] = entry[0];
+            winners[x][1] = entry[1];
         }
-        winners[pos][0] = entry[0];
-        winners[pos][1] = entry[1];
-
     }
 
     //checkScore determines whether player's score is top ten

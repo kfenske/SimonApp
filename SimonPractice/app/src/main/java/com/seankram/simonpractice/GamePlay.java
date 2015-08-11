@@ -81,7 +81,7 @@ public class GamePlay {
             Log.d("player's score", "is not top ten");
         }*/
 
-        storeScore = gameCounter;
+        storeScore = gameCounter - 1;
         gameCounter = 1;
         gameArray.clear();
         playerLost = true;

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import android.widget.EditText;
+import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 
@@ -186,9 +187,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         popupWindow.setFocusable(true);
         popupWindow.update();
 
+        final OnClickListener btnEnterListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText nameEntry = (EditText) popupView.findViewById(R.id.enter_name_edit_text);
+                if (nameEntry.getText() != null) {
+                    nameString = nameEntry.getText().toString();
+                    nameText.setText(nameString);
+                }
+                popupWindow.dismiss();
+            }
+        };
+
         Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
 
-        btnEnter.setOnClickListener(new Button.OnClickListener() {
+        btnEnter.setOnClickListener(btnEnterListener); /*{
 
             @Override
             public void onClick(View v) {
@@ -199,7 +212,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 }
                 popupWindow.dismiss();
             }
-        });
+        });*/
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
     }
 
