@@ -32,6 +32,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
+    private FXPlayer buttonPlayer = new FXPlayer();
+
     TextView levelText;
     TextView howToPlayText;
 
@@ -99,24 +101,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         else {
             switch (v.getId()) {
                 case R.id.b1:
+                    buttonPlayer.play(this, v);
                     if (inputReady) {
                         game.inputArray.add(1);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b2:
+                    buttonPlayer.play(this, v);
                     if (inputReady) {
                         game.inputArray.add(2);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b3:
+                    buttonPlayer.play(this, v);
                     if (inputReady) {
                         game.inputArray.add(3);
                         game.checkAnswer();
                     }
                     break;
                 case R.id.b4:
+                    buttonPlayer.play(this, v);
                     if (inputReady) {
                         game.inputArray.add(4);
                         game.checkAnswer();
