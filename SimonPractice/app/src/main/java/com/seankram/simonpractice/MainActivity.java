@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     TextView levelText;
+    TextView howToPlayText;
 
     ImageButton b1;
     ImageButton b2;
@@ -45,7 +46,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     boolean inputReady = false;
 
     Animation flashButton;
-    public TextView nameText;
 
     public GamePlay game;
     public TopScores topTen;
@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         levelText = (TextView) findViewById(R.id.levelText);
+        howToPlayText = (TextView) findViewById(R.id.howToPlay);
 
         b1 = (ImageButton) findViewById(R.id.b1);
         b2 = (ImageButton) findViewById(R.id.b2);
@@ -71,11 +72,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
+        howToPlayText.setOnClickListener(this);
         startButton.setOnClickListener(this);
         resumeButton.setOnClickListener(this);
 
         flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
-        nameText = (TextView)findViewById(R.id.nameText);
 
         topTen = new TopScores();
         //String[][] winners = topTen.updatedWinners();
@@ -91,7 +92,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             updateLevel();
             flashButtons();
             inputReady = true;
-        } else {
+        }
+        else if (v.getId() == R.id.howToPlay) {
+            howToPlay();
+        }
+        else {
             switch (v.getId()) {
                 case R.id.b1:
                     if (inputReady) {
@@ -183,6 +188,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         topTen.setScore(newEntry);
     }
 
+    protected void howToPlay() {
+
+        LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        final View popupView = layout.inflate(R.layout.how_to_play_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+
+        final OnClickListener btnOkListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        };
+
+        Button btnOK = (Button)popupView.findViewById(R.id.how_to_play_ok);
+
+        btnOK.setOnClickListener(btnOkListener);
+
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+    }
+
     protected void enterHighScore() {
 
         LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -245,6 +273,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 return true;
             case R.id.action_top_scores:
                 startActivity(new Intent(getApplicationContext(),TopScoresActivity.class));
+                return true;
+            case R.id.action_about:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

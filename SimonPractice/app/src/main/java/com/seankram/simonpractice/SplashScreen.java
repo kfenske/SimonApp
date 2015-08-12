@@ -15,7 +15,7 @@ public class SplashScreen extends Activity implements View.OnClickListener {
         View btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(this);
 
-        View btnExit = findViewById(R.id.btnExit);
+        View btnExit = findViewById(R.id.btnQuit);
         btnExit.setOnClickListener(this);
     }
 
@@ -25,7 +25,7 @@ public class SplashScreen extends Activity implements View.OnClickListener {
             case R.id.btnPlay:
                 startGame();
                 break;
-            case R.id.btnExit:
+            case R.id.btnQuit:
                 finish();
                 break;
         }
