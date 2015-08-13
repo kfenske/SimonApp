@@ -230,11 +230,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 final EditText nameEntry = (EditText) popupView.findViewById(R.id.enter_name_edit_text);
-                if (nameEntry.getText() != null) {
+                if (nameEntry.getText().length() != 0) {
                     String str = nameEntry.getEditableText().toString();
                     setScore(str);
+                    popupWindow.dismiss();
                 }
-                popupWindow.dismiss();
+                else {
+                    Toast.makeText(getApplicationContext(), "Please enter your name!", Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
