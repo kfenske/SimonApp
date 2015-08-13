@@ -46,4 +46,32 @@ public class FXPlayer {
 
         mPlayer.start();
     }
+
+    public void playButton(Context c, int btnToPlay) {
+        stop();
+
+        switch(btnToPlay) {
+            case R.id.b1:
+                mPlayer = MediaPlayer.create(c, R.raw.greentwo);
+                break;
+            case R.id.b2:
+                mPlayer = MediaPlayer.create(c, R.raw.redtwo);
+                break;
+            case R.id.b3:
+                mPlayer = MediaPlayer.create(c, R.raw.yellowtwo);
+                break;
+            case R.id.b4:
+                mPlayer = MediaPlayer.create(c, R.raw.bluetwo);
+                break;
+        }
+
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+            public void onCompletion(MediaPlayer mp){
+                stop();
+                mp.release();
+            }
+        });
+
+        mPlayer.start();
+    }
 }

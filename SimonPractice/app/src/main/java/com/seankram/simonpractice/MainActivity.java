@@ -1,5 +1,7 @@
 package com.seankram.simonpractice;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
-    private FXPlayer buttonPlayer = new FXPlayer();
+    private FXPlayer buttonPlayer;
 
     TextView levelText;
 
@@ -43,6 +45,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     Button startButton;
     Button resumeButton;
+
+    int currentButton;
+    int[] btnsToFlash;
+    int counter;
 
     boolean inputReady = false;
 
@@ -74,6 +80,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         b4.setOnClickListener(this);
         startButton.setOnClickListener(this);
         resumeButton.setOnClickListener(this);
+
+        buttonPlayer = new FXPlayer();
 
         flashButton = AnimationUtils.loadAnimation(this, R.anim.bflash);
 
@@ -146,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void flashButtons() {
         updateLevel();
 
-        int[] btnsToFlash = new int[game.gameArray.size()];
+        btnsToFlash = new int[game.gameArray.size()];
         for (int i = 0; i < game.gameArray.size(); i++) {
 
             switch (game.gameArray.get(i)) {
@@ -167,19 +175,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         ArrayList<ObjectAnimator> anims = new ArrayList<>();
 
-        int i = 0;
+        counter = 0;
         for (int viewId : btnsToFlash) {
             ImageButton imgBtn = (ImageButton) findViewById(viewId);
             ObjectAnimator flashBtn = ObjectAnimator.ofFloat(imgBtn, "alpha", 1.0f, 0.0f);
             flashBtn.setRepeatCount(1);
             flashBtn.setRepeatMode(ObjectAnimator.REVERSE);
             flashBtn.setDuration(300);
-            flashBtn.setStartDelay((i * 500) + 250);
+            flashBtn.setStartDelay((counter * 500) + 500);
             anims.add(flashBtn);
-            i++;
+            counter++;
         }
 
+        counter = 0;
         for (ObjectAnimator anim : anims) {
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    currentButton = btnsToFlash[counter];
+                    buttonPlayer.playButton(getApplicationContext(), currentButton);
+                    counter++;
+                }
+            });
             anim.start();
         }
     }
