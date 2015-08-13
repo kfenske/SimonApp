@@ -35,7 +35,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private FXPlayer buttonPlayer = new FXPlayer();
 
     TextView levelText;
-    TextView howToPlayText;
 
     ImageButton b1;
     ImageButton b2;
@@ -61,7 +60,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         levelText = (TextView) findViewById(R.id.levelText);
-        howToPlayText = (TextView) findViewById(R.id.howToPlay);
 
         b1 = (ImageButton) findViewById(R.id.b1);
         b2 = (ImageButton) findViewById(R.id.b2);
@@ -74,7 +72,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
-        howToPlayText.setOnClickListener(this);
         startButton.setOnClickListener(this);
         resumeButton.setOnClickListener(this);
 
@@ -97,9 +94,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             updateLevel();
             flashButtons();
             inputReady = true;
-        }
-        else if (v.getId() == R.id.howToPlay) {
-            howToPlay();
         }
         else {
             switch (v.getId()) {
@@ -197,29 +191,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         topTen.setScore(newEntry);
     }
 
-    protected void howToPlay() {
-
-        LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        final View popupView = layout.inflate(R.layout.how_to_play_popup, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-        popupWindow.update();
-
-        final OnClickListener btnOkListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        };
-
-        Button btnOK = (Button)popupView.findViewById(R.id.how_to_play_ok);
-
-        btnOK.setOnClickListener(btnOkListener);
-
-        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-    }
-
     protected void enterHighScore() {
 
         LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -281,7 +252,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()){
             case R.id.action_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.action_top_scores:
                 startActivity(new Intent(getApplicationContext(),TopScoresActivity.class));
