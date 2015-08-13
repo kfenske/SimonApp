@@ -90,6 +90,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.startButton) {
+            game.gameCounter = 1;
+            game.gameArray.clear();
+
             game.newGame();
             updateLevel();
             flashButtons();
