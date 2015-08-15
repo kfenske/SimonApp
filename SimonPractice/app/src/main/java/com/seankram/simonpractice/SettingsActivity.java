@@ -40,6 +40,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             case R.id.about_button_layout:
                 aboutSimon();
                 break;
+            case R.id.clear_scores_button_layout:
+                clearScores();
+                break;
         }
     }
 
@@ -85,6 +88,38 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         Button btnOK = (Button)popupView.findViewById(R.id.about_simon_ok);
 
         btnOK.setOnClickListener(btnOkListener);
+
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+    }
+
+    protected void clearScores() {
+        LayoutInflater layout = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        final View popupView = layout.inflate(R.layout.clear_scores_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+
+        final View.OnClickListener btnOkListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.topTen = new TopScores();
+                popupWindow.dismiss();
+            }
+        };
+
+        final View.OnClickListener btnCancelListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        };
+
+        Button btnOK = (Button)popupView.findViewById(R.id.clear_scores_ok);
+        Button btnCancel = (Button)popupView.findViewById(R.id.clear_scores_cancel);
+
+        btnOK.setOnClickListener(btnOkListener);
+        btnCancel.setOnClickListener(btnCancelListener);
 
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
     }

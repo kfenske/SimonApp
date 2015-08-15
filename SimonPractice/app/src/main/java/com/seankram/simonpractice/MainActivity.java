@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Animation flashButton;
 
     public GamePlay game;
-    public TopScores topTen;
+    public static TopScores topTen;
 
     String newName;
     String newScore;
@@ -274,9 +274,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 return true;
             case R.id.action_top_scores:
                 startActivity(new Intent(getApplicationContext(),TopScoresActivity.class));
-                return true;
-            case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -36,6 +36,10 @@
     <string name="clear_scores_button_description">Clear your top scores list</string>
     <string name="change_themes_title">Change Theme</string>
     <string name="change_themes_description">Customize your gameboard</string>
+    <string name="clear_scores_ok">OK</string>
+    <string name="clear_scores_cancel">Cancel</string>
+    <string name="clear_scores_title">Clear Scores</string>
+    <string name="clear_scores_description">Are you sure you want to clear your high scores?</string>
 </resources>
 
 
