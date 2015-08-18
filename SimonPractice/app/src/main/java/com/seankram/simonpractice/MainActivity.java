@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.ViewGroup.LayoutParams;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -32,7 +33,7 @@ import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements View.OnTouchListener {
 
     private FXPlayer buttonPlayer;
 
@@ -74,12 +75,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         startButton = (Button) findViewById(R.id.startButton);
         resumeButton = (Button) findViewById(R.id.resumeButton);
 
-        b1.setOnClickListener(this);
-        b2.setOnClickListener(this);
-        b3.setOnClickListener(this);
-        b4.setOnClickListener(this);
-        startButton.setOnClickListener(this);
-        resumeButton.setOnClickListener(this);
+        b1.setOnTouchListener(this);
+        b2.setOnTouchListener(this);
+        b3.setOnTouchListener(this);
+        b4.setOnTouchListener(this);
+        startButton.setOnTouchListener(this);
+        resumeButton.setOnTouchListener(this);
 
         buttonPlayer = new FXPlayer();
 
@@ -93,62 +94,70 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.startButton) {
-            game.gameCounter = 1;
-            game.gameArray.clear();
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (v.getId() == R.id.startButton) {
+                game.gameCounter = 1;
+                game.gameArray.clear();
 
-            game.newGame();
-            updateLevel();
-            flashButtons();
-            inputReady = true;
-        }
-        else {
-            switch (v.getId()) {
-                case R.id.b1:
-                    buttonPlayer.play(this, v);
-                    if (inputReady) {
-                        game.inputArray.add(1);
-                        game.checkAnswer();
-                    }
-                    break;
-                case R.id.b2:
-                    buttonPlayer.play(this, v);
-                    if (inputReady) {
-                        game.inputArray.add(2);
-                        game.checkAnswer();
-                    }
-                    break;
-                case R.id.b3:
-                    buttonPlayer.play(this, v);
-                    if (inputReady) {
-                        game.inputArray.add(3);
-                        game.checkAnswer();
-                    }
-                    break;
-                case R.id.b4:
-                    buttonPlayer.play(this, v);
-                    if (inputReady) {
-                        game.inputArray.add(4);
-                        game.checkAnswer();
-                    }
-                    break;
-            }
-
-            if (game.playerLost) {
+                game.newGame();
                 updateLevel();
-                inputReady = false;
-                Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
-
-                if(topTen.checkScore(game.storeScore)){
-                    enterHighScore();
-                }
-
-            } else if (game.playerWon) {
                 flashButtons();
                 inputReady = true;
             }
+            else {
+                switch (v.getId()) {
+                    case R.id.b1:
+                        v.setPressed(true);
+                        buttonPlayer.play(this, v);
+                        if (inputReady) {
+                            game.inputArray.add(1);
+                            game.checkAnswer();
+                        }
+                        break;
+                    case R.id.b2:
+                        v.setPressed(true);
+                        buttonPlayer.play(this, v);
+                        if (inputReady) {
+                            game.inputArray.add(2);
+                            game.checkAnswer();
+                        }
+                        break;
+                    case R.id.b3:
+                        v.setPressed(true);
+                        buttonPlayer.play(this, v);
+                        if (inputReady) {
+                            game.inputArray.add(3);
+                            game.checkAnswer();
+                        }
+                        break;
+                    case R.id.b4:
+                        v.setPressed(true);
+                        buttonPlayer.play(this, v);
+                        if (inputReady) {
+                            game.inputArray.add(4);
+                            game.checkAnswer();
+                        }
+                        break;
+                }
+
+                if (game.playerLost) {
+                    updateLevel();
+                    inputReady = false;
+                    Toast.makeText(this, "Sorry, you lost!", Toast.LENGTH_SHORT).show();
+
+                    if(topTen.checkScore(game.storeScore)){
+                        enterHighScore();
+                    }
+
+                } else if (game.playerWon) {
+                    flashButtons();
+                    inputReady = true;
+                }
+            }
+            return true;
         }
+        return false;
     }
 
     protected void flashButtons() {
