@@ -38,7 +38,6 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     ImageButton b4;
 
     Button startButton;
-    Button resumeButton;
 
     int currentButton;
     int[] btnsToFlash;
@@ -66,14 +65,12 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         b3 = (ImageButton) findViewById(R.id.b3);
         b4 = (ImageButton) findViewById(R.id.b4);
         startButton = (Button) findViewById(R.id.startButton);
-        resumeButton = (Button) findViewById(R.id.resumeButton);
 
         b1.setOnTouchListener(this);
         b2.setOnTouchListener(this);
         b3.setOnTouchListener(this);
         b4.setOnTouchListener(this);
         startButton.setOnTouchListener(this);
-        resumeButton.setOnTouchListener(this);
 
         buttonPlayer = new FXPlayer();
 
@@ -85,6 +82,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         String fontPath = "fonts/spincycle_ot.ttf";
         Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
         levelText.setTypeface(tf);
+        startButton.setTypeface(tf);
 
         game = new GamePlay();
         updateLevel();
@@ -94,15 +92,8 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v.getId() == R.id.startButton) {
-                game.gameCounter = 1;
-                game.gameArray.clear();
-
-                game.newGame();
-                updateLevel();
-                flashButtons();
-                inputReady = true;
-            }
-            else {
+                v.setPressed(true);
+            } else {
                 switch (v.getId()) {
                     case R.id.b1:
                         v.setPressed(true);
@@ -154,6 +145,22 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
             }
             return true;
         }
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (v.getId() == R.id.startButton) {
+                v.setPressed(false);
+                game.gameCounter = 1;
+                game.gameArray.clear();
+
+                game.newGame();
+                updateLevel();
+                flashButtons();
+                inputReady = true;
+            } else {
+                v.setPressed(false);
+            }
+        }
+
         return false;
     }
 
@@ -232,14 +239,13 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
                     String str = nameEntry.getEditableText().toString();
                     setScore(str);
                     popupWindow.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Please enter your name!", Toast.LENGTH_SHORT).show();
                 }
             }
         };
 
-        Button btnEnter = (Button)popupView.findViewById(R.id.enter_score);
+        Button btnEnter = (Button) popupView.findViewById(R.id.enter_score);
 
         btnEnter.setOnClickListener(btnEnterListener);
 
@@ -274,12 +280,12 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.action_top_scores:
-                startActivity(new Intent(getApplicationContext(),TopScoresActivity.class));
+                startActivity(new Intent(getApplicationContext(), TopScoresActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

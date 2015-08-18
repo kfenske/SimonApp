@@ -106,19 +106,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_button"
+        android:textColor="@drawable/button_select"
+        android:textSize="32sp"
+        android:textStyle="bold"
         android:id="@+id/startButton"
         android:layout_marginTop="81dp"
         android:layout_below="@+id/b3"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/resume_button"
-        android:id="@+id/resumeButton"
-        android:visibility="invisible"
-        android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
         android:layout_width="wrap_content"

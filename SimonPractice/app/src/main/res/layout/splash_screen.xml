@@ -8,20 +8,23 @@
         android:layout_height="wrap_content"
         android:text="Play"
         android:id="@+id/btnPlay"
-        android:textStyle="bold"
+        android:textColor="@drawable/button_select"
+        android:textSize="36sp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/titleTextView"
-        android:layout_marginTop="65dp"/>
+        android:layout_marginTop="65dp"
+        style="?android:attr/borderlessButtonStyle" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quit"
         android:id="@+id/btnQuit"
-        android:textStyle="bold"
+        android:textColor="@drawable/button_select"
+        android:textSize="36sp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/btnPlay"
-        android:layout_alignLeft="@+id/btnPlay"
-        android:layout_alignStart="@+id/btnPlay" />
+        style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
         android:layout_width="wrap_content"
