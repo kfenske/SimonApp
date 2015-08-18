@@ -14,8 +14,8 @@
         android:layout_above="@+id/b3"
         android:layout_alignRight="@+id/startButton"
         android:layout_alignEnd="@+id/startButton"
-        android:layout_marginRight="60dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginEnd="66dp"
         android:clickable="true" />
 
     <ImageButton
@@ -26,8 +26,8 @@
         android:layout_above="@+id/b3"
         android:layout_alignRight="@+id/startButton"
         android:layout_alignEnd="@+id/startButton"
-        android:layout_marginRight="60dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginEnd="66dp"
         android:clickable="true" />
 
     <ImageButton
@@ -36,11 +36,11 @@
         android:id="@+id/b2hid"
         android:background="@drawable/b2lit"
         android:layout_above="@+id/b4"
+        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_toRightOf="@+id/b3"
         android:layout_toEndOf="@+id/b3"
-        android:clickable="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="6dp" />
+        android:clickable="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -48,11 +48,11 @@
         android:id="@+id/b2"
         android:background="@drawable/b2x"
         android:layout_above="@+id/b4"
+        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_toRightOf="@+id/b3"
         android:layout_toEndOf="@+id/b3"
-        android:clickable="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="6dp" />
+        android:clickable="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -60,6 +60,7 @@
         android:id="@+id/b3hid"
         android:background="@drawable/b3lit"
         android:layout_centerVertical="true"
+        android:layout_marginTop="25dp"
         android:layout_alignLeft="@+id/b1"
         android:layout_alignStart="@+id/b1"
         android:clickable="true" />
@@ -70,35 +71,43 @@
         android:id="@+id/b3"
         android:background="@drawable/b3x"
         android:layout_centerVertical="true"
+        android:layout_marginTop="25dp"
         android:layout_alignLeft="@+id/b1"
         android:layout_alignStart="@+id/b1"
-        android:clickable="true"
-        android:layout_marginTop="6dp" />
+        android:clickable="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/b4hid"
         android:background="@drawable/b4lit"
-        android:clickable="true"
-        android:layout_alignBottom="@+id/b3"
-        android:layout_alignRight="@+id/b2" />
+        android:layout_below="@+id/b1"
+        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/b3"
+        android:layout_toEndOf="@+id/b3"
+        android:clickable="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/b4"
         android:background="@drawable/b4x"
-        android:clickable="true"
-        android:layout_alignRight="@+id/b2"
-        android:layout_alignBottom="@+id/b3" />
+        android:layout_below="@+id/b1"
+        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/b3"
+        android:layout_toEndOf="@+id/b3"
+        android:clickable="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_button"
         android:id="@+id/startButton"
-        android:layout_marginTop="71dp"
+        android:layout_marginTop="81dp"
         android:layout_below="@+id/b3"
         android:layout_centerHorizontal="true" />
 
