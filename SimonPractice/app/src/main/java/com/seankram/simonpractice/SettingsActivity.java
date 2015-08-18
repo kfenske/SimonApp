@@ -1,6 +1,7 @@
 package com.seankram.simonpractice;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 /**
  * Created by Kayla_2 on 8/12/2015.
@@ -24,6 +26,18 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         LinearLayout howToPlayButton = (LinearLayout) findViewById(R.id.how_to_play_button_layout);
         LinearLayout clearScores = (LinearLayout) findViewById(R.id.clear_scores_button_layout);
         LinearLayout changeTheme = (LinearLayout) findViewById(R.id.change_themes_button_layout);
+
+        TextView aboutButtonTitle = (TextView) findViewById(R.id.aboutButtonTitle);
+        TextView howToPlayButtonTitle = (TextView) findViewById(R.id.howToPlayButtonTitle);
+        TextView clearScoresButtonTitle = (TextView) findViewById(R.id.clearScoresButtonTitle);
+        TextView changeThemesButtonTitle = (TextView) findViewById(R.id.changeThemesButtonTitle);
+
+        String fontPath = "fonts/spincycle_ot.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+        aboutButtonTitle.setTypeface(tf);
+        howToPlayButtonTitle.setTypeface(tf);
+        clearScoresButtonTitle.setTypeface(tf);
+        changeThemesButtonTitle.setTypeface(tf);
 
         aboutButton.setOnClickListener(this);
         howToPlayButton.setOnClickListener(this);

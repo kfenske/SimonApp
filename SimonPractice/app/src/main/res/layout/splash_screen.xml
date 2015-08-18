@@ -32,7 +32,7 @@
         android:layout_marginTop="120dp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textSize="50sp"
-        android:textColor="#66FFCB" />
+        android:textSize="60sp"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

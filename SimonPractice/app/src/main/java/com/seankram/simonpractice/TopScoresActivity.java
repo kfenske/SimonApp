@@ -1,6 +1,7 @@
 package com.seankram.simonpractice;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ViewDebug;
 import android.widget.TextView;
@@ -38,6 +39,11 @@ public class TopScoresActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_scores);
+
+        TextView topScoresTitle = (TextView) findViewById(R.id.topScoresTitle);
+        String fontPath = "fonts/spincycle_ot.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+        topScoresTitle.setTypeface(tf);
 
         //get references to the widgets
         scoreBoard[0][0] = (TextView) findViewById(R.id.label_score1);

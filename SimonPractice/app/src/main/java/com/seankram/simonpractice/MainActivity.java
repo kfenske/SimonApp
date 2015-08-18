@@ -3,19 +3,14 @@ package com.seankram.simonpractice;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup.LayoutParams;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.PopupWindow;
 import android.widget.Toast;
-import android.widget.EditText;
 import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
@@ -88,6 +81,10 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
 
         topTen = new TopScores();
         //String[][] winners = topTen.updatedWinners();
+
+        String fontPath = "fonts/spincycle_ot.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+        levelText.setTypeface(tf);
 
         game = new GamePlay();
         updateLevel();
@@ -252,7 +249,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     // Updates the display to show what level the user is on,
     // that is, how large their current pattern is.
     protected void updateLevel() {
-        levelText.setText("Level: " + game.gameCounter);
+        levelText.setText("SCORE: " + (game.gameCounter - 1));
     }
 
     @Override

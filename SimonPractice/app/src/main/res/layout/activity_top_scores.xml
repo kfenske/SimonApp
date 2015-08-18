@@ -14,7 +14,7 @@
             android:id="@+id/topScoresTitle"
             android:layout_span="3"
             android:layout_weight="1"
-            android:text="Top Scores"
+            android:text="TOP SCORES"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="28sp"
             android:gravity="center_horizontal"

@@ -28,13 +28,13 @@
         If you get the sequence correct, the flash sequence will continue to increase by one flash each time.</string>
     <string name="button_ok">OK</string>
 
-    <string name="about_button_title">About Simon</string>
+    <string name="about_button_title">ABOUT SIMON</string>
     <string name="about_button_description">Who built it!</string>
-    <string name="how_to_play_button_title">How To Play</string>
+    <string name="how_to_play_button_title">HOW TO PLAY</string>
     <string name="how_to_play_button_description">Learn the rules...</string>
-    <string name="clear_scores_button_title">Clear Scores</string>
+    <string name="clear_scores_button_title">CLEAR SCORES</string>
     <string name="clear_scores_button_description">Clear your top scores list</string>
-    <string name="change_themes_title">Change Theme</string>
+    <string name="change_themes_title">CHANGE THEME</string>
     <string name="change_themes_description">Customize your gameboard</string>
     <string name="clear_scores_ok">OK</string>
     <string name="clear_scores_cancel">Cancel</string>
